@@ -47,17 +47,8 @@ WHERE continent is not null
 Group by Location
 Order by TotalDeathCount desc;
 
+
 -- LET'S BREAK THINGS DOWN BY CONTINENT
-
--- Below gives more accurate continents but the tutorial says to proceed with the next query
---SELECT location, MAX(cast(Total_deaths as int)) as TotalDeathCount
---FROM covid-deaths-441220.covid_deaths.covid_deaths
---Where location like'%States%'
-----WHERE continent is null
---Group by location
---Order by TotalDeathCount desc;
-
-
 --Showing continents with the highest death count per population
 
 SELECT continent, MAX(cast(Total_deaths as int)) as TotalDeathCount
@@ -66,7 +57,6 @@ FROM covid-deaths-441220.covid_deaths.covid_deaths
 WHERE continent is not null
 Group by continent
 Order by TotalDeathCount desc;
-
 
 
 -- Global Numbers
@@ -81,7 +71,6 @@ Order by 1,2;
 
 -- Looking at Total Population vs Vaccinations
 
-
 SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(vac.new_vaccinations) OVER (Partition by dea.location order by dea.location, dea.date) as RollingPeopleVaccinated
 --, (RollingPeopleVaccinated/population)*100
 FROM covid-deaths-441220.covid_deaths.covid_vaccinations vac
@@ -90,6 +79,7 @@ ON dea.location = vac.location
 and dea.date = vac.date
 Where dea.continent is not null
 order by 2,3;
+
 
 -- Use CTE
 
@@ -107,7 +97,6 @@ Where dea.continent is not null
 )
 Select *, (RollingPeopleVaccinated/population)*100
 From PopvsVac;
-
 
 
 -- Temp Table
@@ -147,9 +136,7 @@ and dea.date = vac.date
 Where dea.continent is not null;
 --order by 2,3
 
-
 Select *
 From `covid-deaths-441220.covid_deaths.PercentPopulationVaccinated`
-
 
 --Create more views for tableu
